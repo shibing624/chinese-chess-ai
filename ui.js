@@ -6,15 +6,48 @@
 export class BoardRenderer {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
-        this.cellSize = 60;
-        this.padding = 20;
         this.selectedPiece = null;
         this.legalMoves = [];
         this.lastMove = null;
         this.onPieceClick = null;
         this.onMoveClick = null;
         
+        // 根据屏幕大小动态设置棋盘尺寸
+        this.updateBoardSize();
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', () => {
+            this.updateBoardSize();
+            this.render(this.currentBoard, this.currentChess);
+        });
+        
         this.initBoard();
+    }
+    
+    /**
+     * 根据屏幕大小更新棋盘尺寸
+     */
+    updateBoardSize() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth < 640) {
+            // 手机端
+            this.cellSize = 40;
+            this.padding = 20;
+            this.boardWidth = 360;
+            this.boardHeight = 420;
+        } else if (screenWidth < 1024) {
+            // 平板端
+            this.cellSize = 55;
+            this.padding = 20;
+            this.boardWidth = 480;
+            this.boardHeight = 560;
+        } else {
+            // PC端
+            this.cellSize = 60;
+            this.padding = 20;
+            this.boardWidth = 560;
+            this.boardHeight = 620;
+        }
     }
 
     /**
@@ -23,11 +56,17 @@ export class BoardRenderer {
     initBoard() {
         this.container.innerHTML = '';
         
+        // 根据尺寸设置容器样式
+        this.container.style.width = this.boardWidth + 'px';
+        this.container.style.height = this.boardHeight + 'px';
+        
         // 创建 SVG 网格
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.classList.add('board-grid');
-        svg.setAttribute('width', '520');
-        svg.setAttribute('height', '580');
+        const gridWidth = this.cellSize * 8;
+        const gridHeight = this.cellSize * 9;
+        svg.setAttribute('width', gridWidth);
+        svg.setAttribute('height', gridHeight);
         
         // 绘制横线
         for (let i = 0; i < 10; i++) {
@@ -106,18 +145,23 @@ export class BoardRenderer {
      * 添加河界文字
      */
     addRiverText() {
+        const riverY = this.padding + 4.5 * this.cellSize;
+        const fontSize = Math.max(16, this.cellSize * 0.5);
+        
         const riverText1 = document.createElement('div');
         riverText1.classList.add('river-text');
         riverText1.textContent = '楚河';
-        riverText1.style.left = '120px';
-        riverText1.style.top = '265px';
+        riverText1.style.left = (this.padding + 2 * this.cellSize) + 'px';
+        riverText1.style.top = riverY + 'px';
+        riverText1.style.fontSize = fontSize + 'px';
         this.container.appendChild(riverText1);
         
         const riverText2 = document.createElement('div');
         riverText2.classList.add('river-text');
         riverText2.textContent = '汉界';
-        riverText2.style.left = '320px';
-        riverText2.style.top = '265px';
+        riverText2.style.left = (this.padding + 5.5 * this.cellSize) + 'px';
+        riverText2.style.top = riverY + 'px';
+        riverText2.style.fontSize = fontSize + 'px';
         this.container.appendChild(riverText2);
     }
 
@@ -125,6 +169,10 @@ export class BoardRenderer {
      * 渲染棋盘状态
      */
     render(board, chess) {
+        // 保存当前状态供resize使用
+        this.currentBoard = board;
+        this.currentChess = chess;
+        
         // 清除旧的棋子和标记
         const oldPieces = this.container.querySelectorAll('.chess-piece, .move-hint, .last-move-from, .last-move-to');
         oldPieces.forEach(el => el.remove());
@@ -173,6 +221,13 @@ export class BoardRenderer {
         
         pieceEl.textContent = pieceNames[piece] || piece;
         
+        // 设置棋子大小和字体大小
+        const pieceSize = Math.max(30, this.cellSize * 0.85);
+        const fontSize = Math.max(14, this.cellSize * 0.38);
+        pieceEl.style.width = pieceSize + 'px';
+        pieceEl.style.height = pieceSize + 'px';
+        pieceEl.style.fontSize = fontSize + 'px';
+        
         // 设置位置
         const left = this.padding + x * this.cellSize;
         const top = this.padding + y * this.cellSize;
@@ -214,8 +269,16 @@ export class BoardRenderer {
             hintEl.classList.add('move-hint');
             
             const targetPiece = board[move.y][move.x];
+            const hintSize = Math.max(14, this.cellSize * 0.3);
+            const captureSize = Math.max(30, this.cellSize * 0.85);
+            
             if (targetPiece) {
                 hintEl.classList.add('capture');
+                hintEl.style.width = captureSize + 'px';
+                hintEl.style.height = captureSize + 'px';
+            } else {
+                hintEl.style.width = hintSize + 'px';
+                hintEl.style.height = hintSize + 'px';
             }
             
             const left = this.padding + move.x * this.cellSize;

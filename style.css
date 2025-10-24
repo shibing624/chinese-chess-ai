@@ -1,13 +1,20 @@
 /* 棋盘样式 */
 .chess-board {
-    width: 560px;
-    height: 620px;
+    /* 尺寸由JavaScript动态设置 */
     background: linear-gradient(135deg, #f5e6d3 0%, #e8d4b8 100%);
-    border: 8px solid #8b4513;
+    border: 6px solid #8b4513;
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     position: relative;
-    padding: 20px;
+    /* padding由JavaScript动态设置 */
+    touch-action: none; /* 禁用移动端的默认触摸行为 */
+}
+
+@media (max-width: 640px) {
+    .chess-board {
+        border-width: 4px;
+        border-radius: 6px;
+    }
 }
 
 /* 棋盘网格 */
@@ -41,20 +48,19 @@
 
 /* 棋子样式 */
 .chess-piece {
-    width: 52px;
-    height: 52px;
+    /* 尺寸由JavaScript动态设置 */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
     position: absolute;
     transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     user-select: none;
+    -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
 }
 
 .chess-piece:hover {
@@ -224,50 +230,16 @@
     to { transform: rotate(360deg); }
 }
 
-/* 响应式设计 */
-@media (max-width: 1024px) {
-    .chess-board {
-        width: 480px;
-        height: 532px;
-    }
-    
-    .board-grid {
-        width: 440px;
-        height: 492px;
-    }
-    
-    .chess-piece {
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
-    }
-}
-
+/* 响应式设计 - 移动端优化 */
 @media (max-width: 640px) {
-    .chess-board {
-        width: 360px;
-        height: 399px;
+    /* 移动端触摸优化 */
+    .chess-piece:active {
+        transform: translate(-50%, -50%) scale(1.05);
     }
     
-    .board-grid {
-        width: 320px;
-        height: 359px;
-    }
-    
-    .chess-piece {
-        width: 34px;
-        height: 34px;
-        font-size: 16px;
-    }
-    
-    .move-hint {
-        width: 16px;
-        height: 16px;
-    }
-    
-    .move-hint.capture {
-        width: 34px;
-        height: 34px;
+    /* 移动端hover效果改为active */
+    .chess-piece:hover {
+        transform: translate(-50%, -50%);
     }
 }
 

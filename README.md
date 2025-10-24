@@ -8,7 +8,7 @@
 
 **基于极小化极大算法 + Alpha-Beta剪枝的智能中国象棋对弈系统**
 
-[🎮 演示网站](https://shibing624.github.io/chinese-chess-ai/) • [🧠 算法原理](## 🧠 核心算法)
+[🎮 演示网站](https://shibing624.github.io/chinese-chess-ai/)
 
 </div>
 

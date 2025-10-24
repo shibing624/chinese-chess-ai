@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国象棋AI对弈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 min-h-screen">
+    <div class="container mx-auto px-4 py-6">
+        <!-- 标题区域 --优化视觉效果 -->
+        <div class="text-center mb-4 flex-shrink-0">
+            <h1 class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-red-700 via-red-600 to-orange-600 bg-clip-text text-transparent mb-2 flex items-center justify-center gap-3 drop-shadow-lg">
+                <i class="fas fa-chess text-red-700"></i>
+                中国象棋AI对弈
+                <i class="fas fa-robot text-orange-600"></i>
+            </h1>
+            <p class="text-gray-700 text-base font-medium">基于Alpha-Beta剪枝的智能象棋对弈</p>
+        </div>
+        <!-- 主要内容区域 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            <!-- 左侧：棋盘区域 -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-2xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-4 h-4 bg-black rounded-full"></div>
+                            <span class="font-bold text-lg">黑方（AI）</span>
+                        </div>
+                        <div id="blackTimer" class="text-2xl font-mono font-bold text-gray-700">15:00</div>
+                    </div>
+
+                    <!-- 棋盘 -->
+                    <div id="chessboard" class="chess-board mx-auto"></div>
+
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-4 h-4 bg-red-600 rounded-full"></div>
+                            <span class="font-bold text-lg">红方（玩家）</span>
+                        </div>
+                        <div id="redTimer" class="text-2xl font-mono font-bold text-red-600">15:00</div>
+                    </div>
+
+                    <!-- 控制按钮 -->
+                    <div class="flex gap-3 mt-6">
+                        <button id="newGameBtn" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-plus-circle mr-2"></i>新游戏
+                        </button>
+                        <button id="undoBtn" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-undo mr-2"></i>悔棋
+                        </button>
+                        <button id="hintBtn" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-lightbulb mr-2"></i>提示
+                        </button>
+                        <button id="soundBtn" class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：信息面板 -->
+            <div class="space-y-6">
+                <!-- 游戏状态 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-blue-600"></i>
+                        游戏状态
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="text-gray-600">当前回合</span>
+                            <span id="currentTurn" class="font-bold text-red-600">红方</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                            <span class="text-gray-600">回合数</span>
+                            <span id="moveCount" class="font-bold text-gray-800">0</span>
+                        </div>
+                        <div class="p-3 bg-blue-50 rounded-lg">
+                            <div class="text-sm text-gray-600 mb-1">游戏状态</div>
+                            <div id="gameStatus" class="font-bold text-blue-700">进行中</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 走法历史 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-history text-orange-600"></i>
+                        走法历史
+                    </h3>
+                    <div id="moveHistory" class="space-y-2 max-h-64 overflow-y-auto"></div>
+                </div>
+
+                <!-- AI 思考 -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-brain text-pink-600"></i>
+                        AI 思考
+                    </h3>
+                    <div id="aiThinking" class="text-gray-600 text-sm leading-relaxed">
+                        点击棋子开始走棋...
+                    </div>
+                    <div class="mt-3 text-xs text-gray-500 italic">
+                        💡 AI使用Alpha-Beta剪枝算法
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 游戏结束弹窗 -->
+    <div id="gameOverModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md mx-4 transform transition-all">
+            <div class="text-center">
+                <div id="gameOverIcon" class="text-6xl mb-4"></div>
+                <h2 id="gameOverTitle" class="text-3xl font-bold text-gray-800 mb-2"></h2>
+                <p id="gameOverMessage" class="text-gray-600 mb-6"></p>
+                <button id="closeModalBtn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-lg">
+                    开始新游戏
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

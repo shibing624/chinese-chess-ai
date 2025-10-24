@@ -1,27 +1,20 @@
-# 🏮 中国象棋AI对弈系统
+# 🏮 中国象棋AI人机对弈网站
 
 <div align="center">
 
 ![Chinese Chess](https://img.shields.io/badge/Game-Chinese%20Chess-red?style=for-the-badge&logo=chess)
 ![AI Algorithm](https://img.shields.io/badge/AI-Alpha--Beta%20Pruning-blue?style=for-the-badge&logo=brain)
 ![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-yellow?style=for-the-badge&logo=javascript)
-![License](https://img.shields.io/badge/License-Educational-green?style=for-the-badge)
 
 **基于极小化极大算法 + Alpha-Beta剪枝的智能中国象棋对弈系统**
 
-[🎮 立即开始](#快速开始) • [🧠 算法原理](#核心算法) • [⚙️ 技术栈](#技术栈) • [📖 使用说明](#使用说明)
+[🎮 演示网站](#演示网站) • [🧠 算法原理](#核心算法) • [📖 使用说明](#使用说明)
 
 </div>
 
 ---
 
-## ✨ 项目特色
-
-<table>
-<tr>
-<td width="50%">
-
-### 🎯 核心功能
+## 🎯 核心功能
 - 🎮 **完整象棋规则** - 支持所有棋子移动规则和特殊规则
 - 🤖 **智能AI对手** - 基于经典博弈算法，4-6层搜索深度
 - 🧠 **多维评估** - 综合棋子价值、位置、机动性等因素
@@ -29,20 +22,9 @@
 - 💡 **智能提示** - AI为玩家提供走法建议
 - 📋 **完整记录** - 走法历史记录，支持悔棋功能
 
-</td>
-<td width="50%">
+## 🎮 演示网站
 
-### 🎨 用户体验
-- 🌟 **现代化UI** - 精美的渐变设计和动画效果
-- 📱 **响应式布局** - 完美适配各种屏幕尺寸
-- 🔊 **丰富音效** - Web Audio API生成的实时音效
-- 🎯 **直观交互** - 点击选择，高亮提示可移动位置
-- 🚀 **极速启动** - 纯前端实现，无需服务器
-- 🎪 **沉浸体验** - 全屏布局，专注对弈
-
-</td>
-</tr>
-</table>
+[https://shibing624.github.io/chinese-chess-ai/](https://shibing624.github.io/chinese-chess-ai/)
 
 ## 🚀 快速开始
 
@@ -107,20 +89,6 @@ function minimax(position, depth, maximizingPlayer):
 | **控制力** | 中 | 威胁对方棋子的能力 |
 | **将军威胁** | 高 | 进攻和防守将/帅的能力 |
 
-## 🛠️ 技术栈
-
-<div align="center">
-
-| 技术领域 | 技术选型 | 说明 |
-|---------|---------|------|
-| **前端框架** | Vanilla JavaScript (ES6+) | 原生JS，无框架依赖 |
-| **样式框架** | Tailwind CSS | 现代化CSS框架 |
-| **图标库** | Font Awesome | 丰富的图标资源 |
-| **音效系统** | Web Audio API | 实时生成音效，无需外部文件 |
-| **AI算法** | Minimax + Alpha-Beta | 经典博弈算法 |
-| **模块化** | ES6 Modules | 代码组织清晰 |
-
-</div>
 
 ## 📁 项目结构
 

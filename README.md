@@ -8,7 +8,7 @@
 
 **基于极小化极大算法 + Alpha-Beta剪枝的智能中国象棋对弈系统**
 
-[🎮 演示网站](#演示网站) • [🧠 算法原理](#核心算法) • [📖 使用说明](#使用说明)
+[🎮 演示网站](https://shibing624.github.io/chinese-chess-ai/) • [🧠 算法原理](## 🧠 核心算法)
 
 </div>
 
@@ -248,12 +248,12 @@ this.maxDepth = 3; // 从4降到3，速度提升4-8倍
 | 5层 | ~50,000 | 2-8s | 高级 | 认真对弈 |
 | 6层 | ~300,000 | 8-30s | 专家 | 深度分析 |
 
-## 📧 Contact
+## 📧 联系方式
 
-- Issue (suggestions)
+- 问题反馈（建议）
   ：[![GitHub issues](https://img.shields.io/github/issues/shibing624/chinese-chess-ai.svg)](https://github.com/shibing624/chinese-chess-ai/issues)
-- Email me: xuming: xuming624@qq.com
-- WeChat me: Add my *WeChat ID: xuming624, note: Name-Company-Chess* to join the Chess group.
+- 邮箱联系: xuming: xuming624@qq.com
+- 微信联系: 添加我的 *微信号: xuming624，备注：姓名-公司-技术交流* 加入技术交流群。
 
 <img src="https://github.com/shibing624/agentica/blob/main/docs/wechat.jpeg" width="200" />
 

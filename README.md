@@ -248,6 +248,16 @@ this.maxDepth = 3; // 从4降到3，速度提升4-8倍
 | 5层 | ~50,000 | 2-8s | 高级 | 认真对弈 |
 | 6层 | ~300,000 | 8-30s | 专家 | 深度分析 |
 
+## 📧 Contact
+
+- Issue (suggestions)
+  ：[![GitHub issues](https://img.shields.io/github/issues/shibing624/chinese-chess-ai.svg)](https://github.com/shibing624/chinese-chess-ai/issues)
+- Email me: xuming: xuming624@qq.com
+- WeChat me: Add my *WeChat ID: xuming624, note: Name-Company-Chess* to join the Chess group.
+
+<img src="https://github.com/shibing624/agentica/blob/main/docs/wechat.jpeg" width="200" />
+
+
 ## 📄 开源协议
 
 本项目采用教育用途开源协议，仅供学习和研究使用。
